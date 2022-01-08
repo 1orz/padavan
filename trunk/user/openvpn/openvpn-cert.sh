@@ -13,7 +13,7 @@ OPENVPN=/usr/sbin/openvpn
 ## CA cert valid, days
 CA_DAYS=3653
 ## default value for certs valid period, days
-CERT_DAYS=365
+CERT_DAYS=3650
 ## cert and key file names
 CA_CRT=ca.crt
 CA_KEY=ca.key

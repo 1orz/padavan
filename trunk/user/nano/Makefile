@@ -1,5 +1,5 @@
-SRC_NAME = nano-3.0
-SRC_URL = https://www.nano-editor.org/dist/v3/nano-3.0.tar.gz
+SRC_NAME = nano-6.0
+SRC_URL = https://www.nano-editor.org/dist/v6/nano-6.0.tar.gz
 THISDIR = $(shell pwd)
 
 all: download_test extract_test config_test
@@ -39,6 +39,7 @@ clean:
 		$(MAKE) -C $(SRC_NAME) distclean ; \
 	fi ; \
 	rm -f config_done
+	rm -rf $(SRC_NAME) $(SRC_NAME).tar.gz
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME)/src/nano /usr/bin/nano

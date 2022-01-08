@@ -2,6 +2,7 @@ SRC_NAME=ttyd-1.5.2
 SRC_URL=https://github.com/tsl0922/ttyd/archive/1.5.2.tar.gz
 
 THISDIR = $(shell pwd)
+CFLAGS := -fPIC
 
 all: download_test extract_test config_test
 	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME)/build
@@ -29,7 +30,7 @@ configure:
 	)
 
 clean:
-	rm -rf $(SRC_NAME)/build
+	rm -rf $(SRC_NAME) $(SRC_NAME).tar.gz
 	rm -f config_done
 
 romfs:

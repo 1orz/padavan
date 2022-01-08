@@ -83,11 +83,13 @@ clean_ssr:
 	( if [ -f $(SRC_SSR_NAME)/Makefile ] ; then \
 		$(MAKE) -C $(SRC_SSR_NAME) clean ; \
 	fi )
+	rm -rf $(SRC_SSR_NAME)
 
 clean_ss:
 	( if [ -f $(SRC_SS_NAME)/Makefile ] ; then \
 		$(MAKE) -C $(SRC_SS_NAME) distclean ; \
 	fi )
+	rm -rf $(SRC_SS_NAME)
 	
 romfs:
 ifeq ($(CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS),y)

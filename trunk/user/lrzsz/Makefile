@@ -36,6 +36,7 @@ clean:
 		$(MAKE) -C $(SRC_NAME) distclean ; \
 	fi ; \
 	rm -f config_done
+	rm -rf $(SRC_NAME) $(SRC_NAME).tar.gz
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME)/src/lrz /usr/bin/lrz

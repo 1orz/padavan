@@ -20,6 +20,7 @@ clean:
 	( if [ -f $(SRC_NAME)/Makefile ] ; then \
 		$(MAKE) -C $(SRC_NAME) clean ; \
 	fi )
+	rm -rf $(SRC_NAME) $(SRC_NAME).tar.gz
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME)/dogcom /usr/bin/dogcom

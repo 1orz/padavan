@@ -1,4 +1,4 @@
-SRC_NAME=tcpdump-4.9.2
+SRC_NAME=tcpdump-4.99.1
 SRC_URL=https://www.tcpdump.org/release/$(SRC_NAME).tar.gz
 
 CFLAGS += -Os -ffunction-sections -fdata-sections -DTCPDUMP_MINI
@@ -14,7 +14,6 @@ download_test:
 extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
 		tar zxf $(SRC_NAME).tar.gz; \
-		patch -d $(SRC_NAME) -p1 -i ../100-tcpdump_mini.patch; \
 	fi )
 
 config_test:
@@ -47,8 +46,7 @@ build:
 
 clean:
 	rm -f config_done
-	rm -f tcpdump
-	rm -rf $(SRC_NAME)
+	rm -rf $(SRC_NAME) $(SRC_NAME).tar.gz
 
 romfs:
 	cp $(SRC_NAME)/tcpdump .

@@ -1,5 +1,5 @@
-SRC_NAME = socat-1.7.3.3
-SRC_URL = http://www.dest-unreach.org/socat/download/socat-1.7.3.3.tar.bz2
+SRC_NAME = socat-1.7.4.2
+SRC_URL = http://www.dest-unreach.org/socat/download/socat-1.7.4.2.tar.gz
 THISDIR = $(shell pwd)
 
 all: download_test extract_test config_test
@@ -12,7 +12,7 @@ download_test:
 
 extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
-		tar xf $(SRC_NAME).tar.bz2; \
+		tar zxf $(SRC_NAME).tar.gz; \
 	fi )
 
 config_test:
@@ -37,6 +37,7 @@ clean:
 		$(MAKE) -C $(SRC_NAME) distclean ; \
 	fi ; \
 	rm -f config_done
+	rm -rf $(SRC_NAME) $(SRC_NAME).tar.gz
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME)/socat /usr/bin/socat

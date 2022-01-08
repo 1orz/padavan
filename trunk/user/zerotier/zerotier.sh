@@ -16,7 +16,7 @@ start_instance() {
 		args="$args -p$port"
 	fi
 	if [ -z "$secret" ]; then
-		logger -t "zerotier" "设备密匙为空,正在生成密匙,请稍后..."
+		logger -t "zerotier" "设备id为空,正在生成id,请稍后..."
 		sf="/tmp/zt.$cfg.secret"
 		zerotier-idtool generate "$sf" >/dev/null
 		[ $? -ne 0 ] && return 1
@@ -26,7 +26,7 @@ start_instance() {
 		nvram commit
 	fi
 	if [ -n "$secret" ]; then
-		logger -t "zerotier" "找到密匙,正在写入文件,请稍后..."
+		logger -t "zerotier" "找到id,正在写入文件,请稍后..."
 		echo "$secret" >$config_path/identity.secret
 		rm -f $config_path/identity.public
 	fi

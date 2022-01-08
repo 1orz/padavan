@@ -1,10 +1,21 @@
-SRC_NAME=openvpn-2.4.x
-
+SRC_NAME = openvpn-2.5.5
+SRC_URL = https://github.com/OpenVPN/openvpn/archive/refs/tags/v2.5.5.tar.gz
+ARCHIVE_NAME = v2.5.5
 CFLAGS += -ffunction-sections -fdata-sections
 LDFLAGS += -Wl,--gc-sections
 
-all: config_test
+all: download_test extract_test config_test
 	$(MAKE) -C $(SRC_NAME)
+
+download_test:
+	( if [ ! -f $(ARCHIVE_NAME).tar.gz ]; then \
+		wget -t5 --timeout=20 --no-check-certificate -O $(ARCHIVE_NAME).tar.gz $(SRC_URL); \
+	fi )
+
+extract_test:
+	( if [ ! -d $(SRC_NAME) ]; then \
+		tar -zxf $(ARCHIVE_NAME).tar.gz; \
+	fi )
 
 config_test:
 	( if [ -f ./config_done ]; then \
@@ -58,7 +69,8 @@ clean:
 		$(MAKE) -C $(SRC_NAME) distclean ; \
 	fi ; \
 	rm -f config_done
+	rm -rf $(SRC_NAME) $(ARCHIVE_NAME).tar.gz
 
 romfs:
 	$(ROMFSINST) $(SRC_NAME)/src/openvpn/openvpn /usr/sbin/openvpn
-	$(ROMFSINST) /usr/bin/openvpn-cert.sh
+	$(ROMFSINST) -p +x $(SRC_NAME)/openvpn-cert.sh /usr/bin/openvpn-cert.sh

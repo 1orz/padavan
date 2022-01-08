@@ -1,5 +1,5 @@
-SRC_NAME = htop-3.0.2
-SRC_URL = https://bintray.com/htop/source/download_file?file_path=htop-3.0.2.tar.gz
+SRC_NAME = htop-3.1.2
+SRC_URL = https://github.com/htop-dev/htop/releases/download/3.1.2/htop-3.1.2.tar.xz
 THISDIR = $(shell pwd)
 
 all: download_test extract_test config_test
@@ -7,12 +7,12 @@ all: download_test extract_test config_test
 
 download_test:
 	( if [ ! -f $(SRC_NAME).tar.gz ]; then \
-		wget -t5 --timeout=20 --no-check-certificate -O $(SRC_NAME).tar.gz $(SRC_URL); \
+		wget -t5 --timeout=20 --no-check-certificate -O $(SRC_NAME).tar.xz $(SRC_URL); \
 	fi )
 
 extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
-		tar zxf $(SRC_NAME).tar.gz; \
+		tar xf $(SRC_NAME).tar.gz; \
 	fi )
 
 config_test:
@@ -37,6 +37,7 @@ clean:
 		$(MAKE) -C $(SRC_NAME) distclean ; \
 	fi ; \
 	rm -f config_done
+	rm -rf $(SRC_NAME) $(SRC_NAME).tar.xz
 
 romfs:
 	$(ROMFSINST) -p +x $(THISDIR)/$(SRC_NAME)/htop /usr/bin/htop
