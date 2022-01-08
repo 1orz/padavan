@@ -1,4 +1,6 @@
-SRC_NAME=openssl-1.1.1
+SRC_NAME=openssl-openssl-3.0.1
+SRC_URL=https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.1.tar.gz
+ARCHIVE_NAME=openssl-3.0.1
 
 # openssl use CROSS_COMPILE prefix
 CC=gcc $(CPUFLAGS)
@@ -42,6 +44,17 @@ endif
 all: config_test
 	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME)
 
+
+download_test:
+	( if [ ! -f $(ARCHIVE_NAME).tar.gz ]; then \
+		wget -t5 --timeout=20 --no-check-certificate $(SRC_URL); \
+	fi )
+
+extract_test:
+	( if [ ! -d $(SRC_NAME) ]; then \
+		tar zxf $(ARCHIVE_NAME).tar.gz; \
+	fi )
+
 config_test:
 	( if [ -f ./config_done ]; then \
 		echo "the same configuration"; \
@@ -64,6 +77,7 @@ configure:
 clean:
 	$(MAKE) -C $(SRC_NAME) distclean
 	rm -f config_done
+	rm -rf $(SRC_NAME)
 
 install:
 	$(MAKE) -C $(SRC_NAME) install DESTDIR="$(STAGEDIR)"
@@ -81,6 +95,4 @@ romfs:
 	cp -fP $(DESTDIR)/lib/libcrypto.so* $(ROMFSDIR)/lib
 	$(ROMFSINST) /etc_ro/openssl.cnf
 	$(ROMFSINST) /etc_ro/ca-certificates.crt
-ifeq ($(CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE),y)
 	$(ROMFSINST) $(SRC_NAME)/apps/openssl /usr/bin/openssl
-endif
